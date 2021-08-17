@@ -19,14 +19,13 @@ export interface UpdateSecretOptions {
 }
 
 export async function updateSecretVersion(params: UpdateSecretOptions) {
+  const sopsFile = params.fileName ?? 'sops.json';
 
-  const secretInfo = await describeSecretInfo(params.secretName);
+  const secretInfo = await describeSecretInfo(params.secretName, sopsFile);
 
   if (secretInfo.versions.length > 18) {
     await cleanupOldestSecretVersion(secretInfo);
   }
-
-  const sopsFile = params.fileName ?? 'sops.json';
 
   const secretValue = decodeSopsFile(sopsFile);
 
@@ -38,7 +37,7 @@ export async function updateSecretVersion(params: UpdateSecretOptions) {
     const { remoteUrl, commitHash } = fetchGitInfo();
 
     await tagSecret(secretInfo, fileHash, commitHash, remoteUrl);
-    console.log(`Updating secret ${secretInfo.secretName} succesful: New version is ${fileHash}`);
+    console.log(`Updating secret ${secretInfo.secretName} successful: New version is ${fileHash}`);
   } else {
     console.log(`Secret ${secretInfo.secretName} already current. Latest version is ${fileHash}`);
   }

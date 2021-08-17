@@ -1,5 +1,6 @@
 import * as AWS from 'aws-sdk';
 import { createAwsClient } from './aws';
+import { getSopsKey } from './sops';
 
 export interface SecretVersionInfo {
   hash: string;
@@ -15,30 +16,61 @@ export interface SecretInfo {
   versions: SecretVersionInfo[];
 }
 
-export async function describeSecretInfo(secretName: string): Promise<SecretInfo> {
+export async function describeSecretInfo(secretName: string, sopsFile: string): Promise<SecretInfo> {
   const client = createAwsClient(AWS.SecretsManager);
-  const describe = await client.describeSecret({ SecretId: secretName }).promise();
+  try {
+    const describe = await client.describeSecret({ SecretId: secretName }).promise();
 
-  const versions: SecretVersionInfo[] = [];
-  for (const entry of Object.entries(describe.VersionIdsToStages!)) {
-    const versionHash = entry[0];
-    const versionTag = describe.Tags?.find(t => t.Key === `version:${versionHash}`);
-    const [versionCommit, versionDate] = versionTag?.Value ? versionTag?.Value?.split('/') : [undefined, undefined];
+    const versions: SecretVersionInfo[] = [];
+    for (const entry of Object.entries(describe.VersionIdsToStages!)) {
+      const versionHash = entry[0];
+      const versionTag = describe.Tags?.find(t => t.Key === `version:${versionHash}`);
+      const [versionCommit, versionDate] = versionTag?.Value ? versionTag?.Value?.split('/') : [undefined, undefined];
 
-    versions.push({
-      hash: versionHash,
-      current: entry[1].indexOf('AWSCURRENT') !== -1,
-      commit: versionCommit,
-      date: versionDate,
-    });
-  };
-  versions.sort(versionCompare);
+      versions.push({
+        hash: versionHash,
+        current: entry[1].indexOf('AWSCURRENT') !== -1,
+        commit: versionCommit,
+        date: versionDate,
+      });
+    };
+    versions.sort(versionCompare);
+
+    return {
+      secretName: describe.Name!,
+      secretArn: describe.ARN!,
+      kmsKey: describe.KmsKeyId,
+      versions,
+    };
+  } catch (error) {
+    if (error.code === 'ResourceNotFoundException') {
+      return await createSecret(secretName, sopsFile);
+    }
+    throw error;
+  }
+}
+
+export async function createSecret(secretName: string, sopsFile: string): Promise<SecretInfo> {
+  const client = createAwsClient(AWS.SecretsManager);
+  const id = await createAwsClient(AWS.STS).getCallerIdentity().promise();
+
+  const keyArn = getSopsKey(sopsFile, id.Account!, process.env.AWS_DEFAULT_REGION ?? process.env.AWS_REGION ?? 'us-east-1');
+  if (!keyArn) {
+    throw new Error('cannot find KMS key to use for secret creation');
+  }
+  console.log(`Creating new Secret ${secretName} with KMS key ${keyArn}`);
+
+  const createdSecret = await client.createSecret({
+    Name: secretName,
+    KmsKeyId: keyArn,
+    SecretString: 'init',
+  }).promise();
 
   return {
-    secretName: describe.Name!,
-    secretArn: describe.ARN!,
-    kmsKey: describe.KmsKeyId,
-    versions,
+    secretName: createdSecret.Name!,
+    secretArn: createdSecret.ARN!,
+    kmsKey: keyArn,
+    versions: [],
   };
 }
 
@@ -82,6 +114,9 @@ export async function tagSecret(secretInfo: SecretInfo, version: string, commitH
     }, {
       Key: 'sourceInfo',
       Value: remoteUrl,
+    }, {
+      Key: 'version:latest',
+      Value: version,
     }],
   }).promise();
 }
