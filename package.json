@@ -1,5 +1,9 @@
 {
-  "name": "secret-versioning",
+  "name": "secretsmanager-versioning",
+  "description": "Toolkit to version secrets in AWS SecretsManager",
+  "bin": {
+    "secretsmanager-versioning": "lib/cli.js"
+  },
   "scripts": {
     "clobber": "npx projen clobber",
     "compile": "npx projen compile",
@@ -45,8 +49,15 @@
     "projen": "^0.27.30",
     "standard-version": "^9",
     "ts-jest": "^27.0.5",
+    "ts-node": "^10.2.0",
     "typedoc": "^0.21.4",
     "typescript": "^4.2.0"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.969.0",
+    "md5-file": "^5.0.0",
+    "minimist": "^1.2.5",
+    "proxy-agent": "^5.0.0"
   },
   "bundledDependencies": [],
   "main": "lib/index.js",
