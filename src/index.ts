@@ -22,10 +22,7 @@ export async function updateSecretVersion(params: UpdateSecretOptions) {
 
   const secretInfo = await describeSecretInfo(params.secretName);
 
-  if (secretInfo.versions.length > 15) {
-    console.log('Approaching version limit');
-  }
-  if (secretInfo.versions.length > 8) {
+  if (secretInfo.versions.length > 18) {
     await cleanupOldestSecretVersion(secretInfo);
   }
 

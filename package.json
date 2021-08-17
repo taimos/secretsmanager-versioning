@@ -1,6 +1,6 @@
 {
   "name": "secretsmanager-versioning",
-  "description": "Toolkit to version secrets in AWS SecretsManager",
+  "description": "Toolkit to version secrets in AWS SecretsManager using SOPS",
   "bin": {
     "secretsmanager-versioning": "lib/cli.js"
   },
