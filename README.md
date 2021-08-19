@@ -40,7 +40,7 @@ npx secretsmanager-versioning -f sops.json SecretName
 You should be able to verify that a secret under this path in the currently logged in account and region was created for you. You can also create a secret yourself and simply reference it. You can verify this by checking the secret in your console or by executing:
 
 ```sh
-aws secretsmanager describe-secret --secret-id path/to/secret
+aws secretsmanager describe-secret --secret-id SecretName
 ```
 
 You should be able to verify that the secret is tagged with a md5 hash and the current version should reference your recent commit.
