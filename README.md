@@ -69,5 +69,5 @@ const secret = cdk.SecretValue.secretsManager(secretPath, {
   jsonField: "example",
   versionId: versionId,
 }).toString();
-console.log(secret); // {{resolve:secretsmanager:path/to/secret:SecretString:example::md5hashvalue}}
+console.log(secret); // {{resolve:secretsmanager:SecretName:SecretString:example::md5hashvalue}}
 ```
