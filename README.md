@@ -63,7 +63,7 @@ Add the md5-file dependency to your project and reference your sops file and Sec
 
 ```ts
 import { sync as md5 } from "md5-file";
-const secretPath = "path/to/secret";
+const secretPath = "SecretName";
 const versionId = md5("sops.json");
 const secret = cdk.SecretValue.secretsManager(secretPath, {
   jsonField: "example",
