@@ -5,7 +5,7 @@ A CLI Tool to manage and version [AWS Secrets](https://aws.amazon.com/de/secrets
 ## Overview
 
 SecretsManager Version is a CLI Tool for Secrets in combination with SOPS. It helps you keep your secrets safe and versioned inside git projects.
-The SecretsManager is capable of storing up to 20 tagged secrets which SecretsManger-Versioning will make us of. The secrets will be tagged by using the MD5 Hash of the encrypted file. With this, every change of the SOPS file will be tagged with a unique key to reference. On top of that, each tag is connected with a Git project and Commit Hash to trace its origin.
+The SecretsManager is capable of storing up to 20 tagged secret versions which SecretsManger-Versioning will make use of. The secrets will be versioned by using the MD5 Hash of the encrypted file. With this, every change of the SOPS file will be tagged with a unique key to reference. On top of that, each tag is connected with a Git project and Commit Hash to trace its origin.
 
 ## Prerequisites
 
