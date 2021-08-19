@@ -58,9 +58,65 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<a href="#replace-this" id="replace-this" style="color: inherit; text-decoration: none;">
-					<h1>replace this</h1>
+				<a href="#secretsmanger-versioning" id="secretsmanger-versioning" style="color: inherit; text-decoration: none;">
+					<h1>SecretsManger Versioning</h1>
 				</a>
+				<p>A CLI Tool to manage and version <a href="https://aws.amazon.com/de/secrets-manager/">AWS Secrets</a> with <a href="https://github.com/mozilla/sops">SOPS</a></p>
+				<a href="#overview" id="overview" style="color: inherit; text-decoration: none;">
+					<h2>Overview</h2>
+				</a>
+				<p>SecretsManager Version is a CLI Tool for Secrets in combination with SOPS. It helps you keep your secrets safe and versioned inside git projects.
+				The SecretsManager is capable of storing up to 20 tagged secret versions which SecretsManger-Versioning will make use of. The secrets will be versioned by using the MD5 Hash of the encrypted file. With this, every change of the SOPS file will be tagged with a unique key to reference. On top of that, each tag is connected with a Git project and Commit Hash to trace its origin.</p>
+				<a href="#prerequisites" id="prerequisites" style="color: inherit; text-decoration: none;">
+					<h2>Prerequisites</h2>
+				</a>
+				<ul>
+					<li><a href="https://aws.amazon.com/account/">AWS Account</a></li>
+					<li><a href="https://aws.amazon.com/kms/">KMS Key</a></li>
+					<li><a href="https://aws.amazon.com/cli/">AWS CLI (optional)</a></li>
+					<li><a href="https://github.com/mozilla/sops">SOPS</a></li>
+					<li><a href="https://nodejs.org/en/">Node 12 or higher</a></li>
+					<li><a href="https://git-scm.com/">GIT</a></li>
+				</ul>
+				<a href="#secret-management" id="secret-management" style="color: inherit; text-decoration: none;">
+					<h2>Secret Management</h2>
+				</a>
+				<p>Create a new git repository and open a new terminal there:</p>
+				<pre><code class="language-sh"><span style="color: #000000">git init </span><span style="color: #795E26">.</span>
+<span style="color: #000000">git remote add origin git@github.com:username/new_repo</span>
+</code></pre>
+				<p>Create a new sops file and encrypt it with your kms key:</p>
+				<pre><code class="language-sh"><span style="color: #000000">sops --kms arn:aws:kms:region:account:key/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx sops.json</span>
+</code></pre>
+				<p>Now run the following to test if the configuration works:</p>
+				<pre><code><span style="color: #001080">npx</span><span style="color: #000000"> </span><span style="color: #001080">secretsmanager</span><span style="color: #000000">-</span><span style="color: #001080">versioning</span><span style="color: #000000"> -</span><span style="color: #001080">f</span><span style="color: #000000"> </span><span style="color: #001080">sops</span><span style="color: #000000">.</span><span style="color: #001080">json</span><span style="color: #000000"> </span><span style="color: #001080">SecretName</span>
+</code></pre>
+				<p>You should be able to verify that a secret under this name in the currently logged-in account and region was created for you. You can also create a secret yourself and simply reference it. You can verify this by checking the secret in your console or by executing:</p>
+				<pre><code class="language-sh"><span style="color: #000000">aws secretsmanager describe-secret --secret-id SecretName</span>
+</code></pre>
+				<p>You should be able to verify that the secret is tagged with a md5 hash and the current version should reference your recent commit.</p>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<p>The secret can be used by referring to with the md5 hash. There are multiple ways to do this. One example is highlighted here.</p>
+				<p>Decrypted Sops File (sops.json)</p>
+				<pre><code class="language-json"><span style="color: #000000">{</span>
+<span style="color: #000000">  </span><span style="color: #0451A5">&quot;example&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;supersecretstring&quot;</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<a href="#cdk" id="cdk" style="color: inherit; text-decoration: none;">
+					<h3>CDK</h3>
+				</a>
+				<p>Add the md5-file dependency to your project and reference your sops file and Secret. After that you should be to reference a jsonField to get reference the secret value:</p>
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">sync</span><span style="color: #000000"> </span><span style="color: #AF00DB">as</span><span style="color: #000000"> </span><span style="color: #001080">md5</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;md5-file&quot;</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">secretPath</span><span style="color: #000000"> = </span><span style="color: #A31515">&quot;SecretName&quot;</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">versionId</span><span style="color: #000000"> = </span><span style="color: #795E26">md5</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;sops.json&quot;</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">secret</span><span style="color: #000000"> = </span><span style="color: #001080">cdk</span><span style="color: #000000">.</span><span style="color: #001080">SecretValue</span><span style="color: #000000">.</span><span style="color: #795E26">secretsManager</span><span style="color: #000000">(</span><span style="color: #001080">secretPath</span><span style="color: #000000">, {</span>
+<span style="color: #000000">  </span><span style="color: #001080">jsonField:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;example&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">versionId:</span><span style="color: #000000"> </span><span style="color: #001080">versionId</span><span style="color: #000000">,</span>
+<span style="color: #000000">}).</span><span style="color: #795E26">toString</span><span style="color: #000000">();</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">secret</span><span style="color: #000000">); </span><span style="color: #008000">// {{resolve:secretsmanager:SecretName:SecretString:example::md5hashvalue}}</span>
+</code></pre>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
