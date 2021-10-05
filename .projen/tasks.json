@@ -250,58 +250,25 @@
       },
       "steps": [
         {
-          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='projen'"
+          "exec": "npm-check-updates --dep dev --upgrade --target=minor"
         },
         {
-          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='projen'"
+          "exec": "npm-check-updates --dep optional --upgrade --target=minor"
         },
         {
-          "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='projen'"
+          "exec": "npm-check-updates --dep peer --upgrade --target=minor"
         },
         {
-          "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='projen'"
+          "exec": "npm-check-updates --dep prod --upgrade --target=minor"
         },
         {
-          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='projen'"
-        },
-        {
-          "exec": "yarn install --check-files"
-        },
-        {
-          "exec": "yarn upgrade @taimos/projen @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import jest jest-junit json-schema npm-check-updates standard-version ts-jest ts-node typedoc typescript aws-sdk md5-file minimist proxy-agent"
-        },
-        {
-          "exec": "npx projen"
-        }
-      ]
-    },
-    "upgrade-projen": {
-      "name": "upgrade-projen",
-      "description": "upgrade projen",
-      "env": {
-        "CI": "0"
-      },
-      "steps": [
-        {
-          "exec": "npm-check-updates --dep dev --upgrade --target=minor --filter='projen'"
-        },
-        {
-          "exec": "npm-check-updates --dep optional --upgrade --target=minor --filter='projen'"
-        },
-        {
-          "exec": "npm-check-updates --dep peer --upgrade --target=minor --filter='projen'"
-        },
-        {
-          "exec": "npm-check-updates --dep prod --upgrade --target=minor --filter='projen'"
-        },
-        {
-          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --filter='projen'"
+          "exec": "npm-check-updates --dep bundle --upgrade --target=minor"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade projen"
+          "exec": "yarn upgrade"
         },
         {
           "exec": "npx projen"

@@ -23,7 +23,6 @@
     "docgen": "npx projen docgen",
     "release": "npx projen release",
     "upgrade": "npx projen upgrade",
-    "upgrade-projen": "npx projen upgrade-projen",
     "projen": "npx projen"
   },
   "author": {
