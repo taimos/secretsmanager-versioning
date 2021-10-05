@@ -42,7 +42,7 @@ export async function describeSecretInfo(secretName: string, sopsFile: string): 
       kmsKey: describe.KmsKeyId,
       versions,
     };
-  } catch (error) {
+  } catch (error: any) {
     if (error.code === 'ResourceNotFoundException') {
       return await createSecret(secretName, sopsFile);
     }
