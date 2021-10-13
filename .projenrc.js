@@ -17,7 +17,6 @@ const project = new TaimosTypescriptLibrary({
   bin: {
     'secretsmanager-versioning': 'lib/cli.js',
   },
-  projenUpgradeSecret: 'GH_TOKEN',
 });
 
 project.synth();
