@@ -17,6 +17,11 @@ const project = new TaimosTypescriptLibrary({
   bin: {
     'secretsmanager-versioning': 'lib/cli.js',
   },
+  gitpod: true,
+  autoApproveUpgrades: true,
+  autoApproveOptions: {
+    secret: 'GH_SECRET',
+  },
 });
 
 project.synth();
