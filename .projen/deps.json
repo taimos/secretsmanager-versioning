@@ -83,7 +83,11 @@
       "type": "build"
     },
     {
-      "name": "aws-sdk",
+      "name": "@aws-sdk/client-secrets-manager",
+      "type": "runtime"
+    },
+    {
+      "name": "@aws-sdk/client-sts",
       "type": "runtime"
     },
     {
