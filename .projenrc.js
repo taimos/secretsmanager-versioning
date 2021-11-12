@@ -9,7 +9,8 @@ const project = new TaimosTypescriptLibrary({
     '@taimos/projen',
   ],
   deps: [
-    'aws-sdk',
+    '@aws-sdk/client-secrets-manager',
+    '@aws-sdk/client-sts',
     'md5-file',
     'minimist',
     'proxy-agent',

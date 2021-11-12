@@ -1,4 +1,11 @@
-import * as AWS from 'aws-sdk';
+import {
+  SecretsManagerClient,
+  DescribeSecretCommand,
+  CreateSecretCommand,
+  TagResourceCommand,
+  UpdateSecretVersionStageCommand, UntagResourceCommand, PutSecretValueCommand,
+} from '@aws-sdk/client-secrets-manager';
+import { STSClient, GetCallerIdentityCommand } from '@aws-sdk/client-sts';
 import { createAwsClient } from './aws';
 import { getSopsKey } from './sops';
 
@@ -17,9 +24,9 @@ export interface SecretInfo {
 }
 
 export async function describeSecretInfo(secretName: string, sopsFile: string): Promise<SecretInfo> {
-  const client = createAwsClient(AWS.SecretsManager);
+  const client = createAwsClient(SecretsManagerClient);
   try {
-    const describe = await client.describeSecret({ SecretId: secretName }).promise();
+    const describe = await client.send(new DescribeSecretCommand({ SecretId: secretName }));
 
     const versions: SecretVersionInfo[] = [];
     for (const entry of Object.entries(describe.VersionIdsToStages!)) {
@@ -51,8 +58,8 @@ export async function describeSecretInfo(secretName: string, sopsFile: string): 
 }
 
 export async function createSecret(secretName: string, sopsFile: string): Promise<SecretInfo> {
-  const client = createAwsClient(AWS.SecretsManager);
-  const id = await createAwsClient(AWS.STS).getCallerIdentity().promise();
+  const client = createAwsClient(SecretsManagerClient);
+  const id = await createAwsClient(STSClient).send(new GetCallerIdentityCommand({}));
 
   const keyArn = getSopsKey(sopsFile, id.Account!, process.env.AWS_DEFAULT_REGION ?? process.env.AWS_REGION ?? 'us-east-1');
   if (!keyArn) {
@@ -60,11 +67,11 @@ export async function createSecret(secretName: string, sopsFile: string): Promis
   }
   console.log(`Creating new Secret ${secretName} with KMS key ${keyArn}`);
 
-  const createdSecret = await client.createSecret({
+  const createdSecret = await client.send(new CreateSecretCommand({
     Name: secretName,
     KmsKeyId: keyArn,
     SecretString: 'init',
-  }).promise();
+  }));
 
   return {
     secretName: createdSecret.Name!,
@@ -78,35 +85,35 @@ export async function cleanupOldestSecretVersion(secretInfo: SecretInfo): Promis
   const oldest = secretInfo.versions[0];
   console.log(`Cleaning up oldest version ${oldest.hash} from ${oldest.date}`);
 
-  const client = createAwsClient(AWS.SecretsManager);
-  await client.updateSecretVersionStage({
+  const client = createAwsClient(SecretsManagerClient);
+  await client.send(new UpdateSecretVersionStageCommand({
     SecretId: secretInfo.secretName,
     VersionStage: oldest.hash,
     RemoveFromVersionId: oldest.hash,
-  }).promise();
-  await client.untagResource({
+  }));
+  await client.send(new UntagResourceCommand({
     SecretId: secretInfo.secretName,
     TagKeys: [`version:${oldest.hash}`],
-  }).promise();
+  }));
 }
 
 export async function updateSecretValue(secretInfo: SecretInfo, secretValue: string, fileHash: string): Promise<boolean> {
   if (secretInfo.versions.find(v => v.hash === fileHash)?.current) {
     return false;
   }
-  const client = createAwsClient(AWS.SecretsManager);
-  await client.putSecretValue({
+  const client = createAwsClient(SecretsManagerClient);
+  await client.send(new PutSecretValueCommand({
     SecretId: secretInfo.secretName,
     ClientRequestToken: fileHash,
     SecretString: secretValue,
     VersionStages: ['AWSCURRENT', fileHash],
-  }).promise();
+  }));
   return true;
 }
 
 export async function tagSecret(secretInfo: SecretInfo, version: string, commitHash: string, remoteUrl: string): Promise<void> {
-  const client = createAwsClient(AWS.SecretsManager);
-  await client.tagResource({
+  const client = createAwsClient(SecretsManagerClient);
+  await client.send(new TagResourceCommand({
     SecretId: secretInfo.secretName,
     Tags: [{
       Key: `version:${version}`,
@@ -118,7 +125,7 @@ export async function tagSecret(secretInfo: SecretInfo, version: string, commitH
       Key: 'version:latest',
       Value: version,
     }],
-  }).promise();
+  }));
 }
 
 function versionCompare(a: SecretVersionInfo, b: SecretVersionInfo): number {
