@@ -73,30 +73,31 @@ console.log(secret); // {{resolve:secretsmanager:SecretName:SecretString:example
 ```
 
 ##### CDK Pipeline - Automatic update of Secrets
-If you are using the cdk module aws-cdk-pipelines you can use the following CodeBuild-Step to automatically update your secret:
+
+If you are using the CDK pipelines module, you can use the following CodeBuild-Step to automatically update your secret in the pipeline:
 
 ```typescript
 
-    const updateSecretEU = new pipelines.CodeBuildStep( 'updateSecret', {
-      commands:[
-        
-        `npx secretsmanager-versioning -f ${secretFileName} '${secretName}'`,
-      ],
-      rolePolicyStatements: [
-        new iam.PolicyStatement({actions:[
-          "secretsmanager:UntagResource",
-          "secretsmanager:DescribeSecret",
-          "secretsmanager:PutSecretValue",
-          "secretsmanager:UpdateSecretVersionStage",
-          "secretsmanager:TagResource"
-        ],resources:[secretArn]}),
-        new iam.PolicyStatement({actions:[
-          "kms:Decrypt",
-          "kms:Encrypt",
-          "kms:GenerateDataKey"
-        ],resources:[secretKeyArn]})
+const updateSecretEU = new pipelines.CodeBuildStep( 'updateSecret', {
+  commands:[
+    `npx secretsmanager-versioning -f ${secretFileName} '${secretName}'`,
+  ],
+  rolePolicyStatements: [
+    new iam.PolicyStatement({actions:[
+      "secretsmanager:UntagResource",
+      "secretsmanager:DescribeSecret",
+      "secretsmanager:PutSecretValue",
+      "secretsmanager:UpdateSecretVersionStage",
+      "secretsmanager:TagResource"
+    ],resources:[secretArn]}),
+    new iam.PolicyStatement({actions:[
+      "kms:Decrypt",
+      "kms:Encrypt",
+      "kms:GenerateDataKey"
+    ],resources:[secretKeyArn]})
 
-      ]
-    })
+  ]
+})
 ```
-Further define this CodeBuild-Step as a pre-action in your stage.
+
+Then use this CodeBuildStep as a pre-action in your stage.
