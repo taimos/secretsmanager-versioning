@@ -83,21 +83,26 @@ const updateSecretEU = new pipelines.CodeBuildStep( 'updateSecret', {
     `npx secretsmanager-versioning -f ${secretFileName} '${secretName}'`,
   ],
   rolePolicyStatements: [
-    new iam.PolicyStatement({actions:[
-      "secretsmanager:UntagResource",
-      "secretsmanager:DescribeSecret",
-      "secretsmanager:PutSecretValue",
-      "secretsmanager:UpdateSecretVersionStage",
-      "secretsmanager:TagResource"
-    ],resources:[secretArn]}),
-    new iam.PolicyStatement({actions:[
-      "kms:Decrypt",
-      "kms:Encrypt",
-      "kms:GenerateDataKey"
-    ],resources:[secretKeyArn]})
-
-  ]
-})
+    new iam.PolicyStatement({
+      actions: [
+        "secretsmanager:UntagResource",
+        "secretsmanager:DescribeSecret",
+        "secretsmanager:PutSecretValue",
+        "secretsmanager:UpdateSecretVersionStage",
+        "secretsmanager:TagResource",
+      ],
+      resources: ['secretArn'],
+    }),
+    new iam.PolicyStatement({
+      actions: [
+        "kms:Decrypt",
+        "kms:Encrypt",
+        "kms:GenerateDataKey",
+      ],
+      resources: ['secretKeyArn'],
+    }),
+  ],
+});
 ```
 
 Then use this CodeBuildStep as a pre-action in your stage.
