@@ -16,5 +16,5 @@ export function calculateFileHash(fileName: string): string {
 export function getSopsKey(fileName: string, account: string, region: string): string | undefined {
   const content = JSON.parse(fs.readFileSync(fileName, { encoding: 'utf-8' }));
   const kmsKeys = content.sops.kms.map((key: any) => key.arn) as string[];
-  return kmsKeys.find(k => k.startsWith(`arn:aws:kms:${region}:${account}:key`));
+  return kmsKeys.find(k => k.startsWith(`arn:aws:kms:${region}:${account}:key`) || k.startsWith(`arn:aws:kms:${region}:${account}:alias`));
 }
