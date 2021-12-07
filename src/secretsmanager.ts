@@ -50,7 +50,7 @@ export async function describeSecretInfo(secretName: string, sopsFile: string): 
       versions,
     };
   } catch (error: any) {
-    if (error.code === 'ResourceNotFoundException') {
+    if (error.name === 'ResourceNotFoundException') {
       return await createSecret(secretName, sopsFile);
     }
     throw error;
