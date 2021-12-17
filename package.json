@@ -55,6 +55,7 @@
   "dependencies": {
     "@aws-sdk/client-secrets-manager": "^3.40.0",
     "@aws-sdk/client-sts": "^3.40.0",
+    "@aws-sdk/credential-providers": "^3.40.0",
     "md5-file": "^5.0.0",
     "minimist": "^1.2.5",
     "proxy-agent": "^5.0.0"

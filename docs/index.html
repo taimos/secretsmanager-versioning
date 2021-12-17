@@ -95,6 +95,12 @@
 				<pre><code class="language-sh"><span style="color: #000000">aws secretsmanager describe-secret --secret-id SecretName</span>
 </code></pre>
 				<p>You should be able to verify that the secret is tagged with a md5 hash and the current version should reference your recent commit.</p>
+				<a href="#cross-account-access" id="cross-account-access" style="color: inherit; text-decoration: none;">
+					<h3>Cross account access</h3>
+				</a>
+				<p>By providing the <code>--role,-r</code> option you can specify that a cross account role should be assumed before any AWS API call.</p>
+				<pre><code><span style="color: #001080">npx</span><span style="color: #000000"> </span><span style="color: #001080">secretsmanager</span><span style="color: #000000">-</span><span style="color: #001080">versioning</span><span style="color: #000000"> -</span><span style="color: #001080">f</span><span style="color: #000000"> </span><span style="color: #001080">sops</span><span style="color: #000000">.</span><span style="color: #001080">json</span><span style="color: #000000"> -</span><span style="color: #001080">r</span><span style="color: #000000"> arn:aws:iam::</span><span style="color: #098658">123456789012</span><span style="color: #000000">:</span><span style="color: #001080">role</span><span style="color: #000000">/</span><span style="color: #001080">MagicRole</span><span style="color: #000000"> </span><span style="color: #001080">SecretName</span>
+</code></pre>
 				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
 					<h2>Usage</h2>
 				</a>

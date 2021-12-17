@@ -23,8 +23,8 @@ export interface SecretInfo {
   versions: SecretVersionInfo[];
 }
 
-export async function describeSecretInfo(secretName: string, sopsFile: string): Promise<SecretInfo> {
-  const client = createAwsClient(SecretsManagerClient);
+export async function describeSecretInfo(secretName: string, sopsFile: string, roleArn?: string): Promise<SecretInfo> {
+  const client = createAwsClient(SecretsManagerClient, roleArn);
   try {
     const describe = await client.send(new DescribeSecretCommand({ SecretId: secretName }));
 
@@ -51,15 +51,15 @@ export async function describeSecretInfo(secretName: string, sopsFile: string): 
     };
   } catch (error: any) {
     if (error.name === 'ResourceNotFoundException') {
-      return await createSecret(secretName, sopsFile);
+      return await createSecret(secretName, sopsFile, roleArn);
     }
     throw error;
   }
 }
 
-export async function createSecret(secretName: string, sopsFile: string): Promise<SecretInfo> {
-  const client = createAwsClient(SecretsManagerClient);
-  const id = await createAwsClient(STSClient).send(new GetCallerIdentityCommand({}));
+export async function createSecret(secretName: string, sopsFile: string, roleArn?: string): Promise<SecretInfo> {
+  const client = createAwsClient(SecretsManagerClient, roleArn);
+  const id = await createAwsClient(STSClient, roleArn).send(new GetCallerIdentityCommand({}));
 
   const keyArn = getSopsKey(sopsFile, id.Account!, process.env.AWS_DEFAULT_REGION ?? process.env.AWS_REGION ?? 'us-east-1');
   if (!keyArn) {
@@ -81,11 +81,11 @@ export async function createSecret(secretName: string, sopsFile: string): Promis
   };
 }
 
-export async function cleanupOldestSecretVersion(secretInfo: SecretInfo): Promise<void> {
+export async function cleanupOldestSecretVersion(secretInfo: SecretInfo, roleArn?: string): Promise<void> {
   const oldest = secretInfo.versions[0];
   console.log(`Cleaning up oldest version ${oldest.hash} from ${oldest.date}`);
 
-  const client = createAwsClient(SecretsManagerClient);
+  const client = createAwsClient(SecretsManagerClient, roleArn);
   await client.send(new UpdateSecretVersionStageCommand({
     SecretId: secretInfo.secretName,
     VersionStage: oldest.hash,
@@ -97,11 +97,11 @@ export async function cleanupOldestSecretVersion(secretInfo: SecretInfo): Promis
   }));
 }
 
-export async function updateSecretValue(secretInfo: SecretInfo, secretValue: string, fileHash: string): Promise<boolean> {
+export async function updateSecretValue(secretInfo: SecretInfo, secretValue: string, fileHash: string, roleArn?: string): Promise<boolean> {
   if (secretInfo.versions.find(v => v.hash === fileHash)?.current) {
     return false;
   }
-  const client = createAwsClient(SecretsManagerClient);
+  const client = createAwsClient(SecretsManagerClient, roleArn);
   await client.send(new PutSecretValueCommand({
     SecretId: secretInfo.secretName,
     ClientRequestToken: fileHash,
@@ -111,8 +111,8 @@ export async function updateSecretValue(secretInfo: SecretInfo, secretValue: str
   return true;
 }
 
-export async function tagSecret(secretInfo: SecretInfo, version: string, commitHash: string, remoteUrl: string): Promise<void> {
-  const client = createAwsClient(SecretsManagerClient);
+export async function tagSecret(secretInfo: SecretInfo, version: string, commitHash: string, remoteUrl: string, roleArn?: string): Promise<void> {
+  const client = createAwsClient(SecretsManagerClient, roleArn);
   await client.send(new TagResourceCommand({
     SecretId: secretInfo.secretName,
     Tags: [{

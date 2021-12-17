@@ -91,6 +91,10 @@
       "type": "runtime"
     },
     {
+      "name": "@aws-sdk/credential-providers",
+      "type": "runtime"
+    },
+    {
       "name": "md5-file",
       "type": "runtime"
     },
