@@ -6,9 +6,11 @@ import { updateSecretVersion } from '.';
 const args = minimist(process.argv.slice(2), {
   string: [
     'file',
+    'role',
   ],
   alias: {
     file: 'f',
+    role: 'r',
   },
 });
 
@@ -22,6 +24,7 @@ void (async () => {
     await updateSecretVersion({
       secretName,
       fileName: args.file,
+      roleArn: args.role,
     });
   } catch (e) {
     console.log(e);

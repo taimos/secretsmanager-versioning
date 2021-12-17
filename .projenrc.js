@@ -11,6 +11,7 @@ const project = new TaimosTypescriptLibrary({
   deps: [
     '@aws-sdk/client-secrets-manager',
     '@aws-sdk/client-sts',
+    '@aws-sdk/credential-providers',
     'md5-file',
     'minimist',
     'proxy-agent',

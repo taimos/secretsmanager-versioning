@@ -16,27 +16,34 @@ export interface UpdateSecretOptions {
    * @default sops.json
    */
   readonly fileName?: string;
+
+  /**
+   * The name of the role to assume
+   *
+   * @default -
+   */
+  readonly roleArn?: string;
 }
 
 export async function updateSecretVersion(params: UpdateSecretOptions) {
   const sopsFile = params.fileName ?? 'sops.json';
 
-  const secretInfo = await describeSecretInfo(params.secretName, sopsFile);
+  const secretInfo = await describeSecretInfo(params.secretName, sopsFile, params.roleArn);
 
   if (secretInfo.versions.length > 18) {
-    await cleanupOldestSecretVersion(secretInfo);
+    await cleanupOldestSecretVersion(secretInfo, params.roleArn);
   }
 
   const secretValue = decodeSopsFile(sopsFile);
 
   const fileHash = calculateFileHash(sopsFile);
 
-  const needsUpdate = await updateSecretValue(secretInfo, secretValue, fileHash);
+  const needsUpdate = await updateSecretValue(secretInfo, secretValue, fileHash, params.roleArn);
 
   if (needsUpdate) {
     const { remoteUrl, commitHash } = fetchGitInfo();
 
-    await tagSecret(secretInfo, fileHash, commitHash, remoteUrl);
+    await tagSecret(secretInfo, fileHash, commitHash, remoteUrl, params.roleArn);
     console.log(`Updating secret ${secretInfo.secretName} successful: New version is ${fileHash}`);
   } else {
     console.log(`Secret ${secretInfo.secretName} already current. Latest version is ${fileHash}`);

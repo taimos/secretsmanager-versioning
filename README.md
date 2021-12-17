@@ -42,8 +42,15 @@ You should be able to verify that a secret under this name in the currently logg
 ```sh
 aws secretsmanager describe-secret --secret-id SecretName
 ```
-
 You should be able to verify that the secret is tagged with a md5 hash and the current version should reference your recent commit.
+
+### Cross account access
+
+By providing the `--role,-r` option you can specify that a cross account role should be assumed before any AWS API call.
+
+```
+npx secretsmanager-versioning -f sops.json -r arn:aws:iam::123456789012:role/MagicRole SecretName
+```
 
 ## Usage
 
