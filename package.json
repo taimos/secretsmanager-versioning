@@ -21,6 +21,7 @@
     "test:watch": "npx projen test:watch",
     "unbump": "npx projen unbump",
     "upgrade": "npx projen upgrade",
+    "upgrade-projen": "npx projen upgrade-projen",
     "watch": "npx projen watch",
     "projen": "npx projen"
   },
@@ -31,20 +32,20 @@
     "organization": true
   },
   "devDependencies": {
-    "@taimos/projen": "^0.0.128",
-    "@types/jest": "^27.0.3",
+    "@taimos/projen": "^0.0.130",
+    "@types/jest": "^27.4.0",
     "@types/node": "^12",
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
     "eslint": "^8",
     "eslint-import-resolver-node": "^0.3.6",
     "eslint-import-resolver-typescript": "^2.5.0",
-    "eslint-plugin-import": "^2.25.3",
-    "jest": "^27.4.5",
+    "eslint-plugin-import": "^2.25.4",
+    "jest": "^27.4.7",
     "jest-junit": "^13",
     "json-schema": "^0.4.0",
     "npm-check-updates": "^12",
-    "projen": "^0.44.0",
+    "projen": "^0.50.20",
     "standard-version": "^9",
     "ts-jest": "^27.1.2",
     "ts-node": "^10.4.0",
@@ -52,21 +53,20 @@
     "typescript": "^4.4.0"
   },
   "dependencies": {
-    "@aws-sdk/client-secrets-manager": "^3.43.0",
-    "@aws-sdk/client-sts": "^3.43.0",
-    "@aws-sdk/credential-providers": "^3.43.0",
+    "@aws-sdk/client-secrets-manager": "^3.46.0",
+    "@aws-sdk/client-sts": "^3.46.0",
+    "@aws-sdk/credential-providers": "^3.46.0",
     "md5-file": "^5.0.0",
     "minimist": "^1.2.5",
     "proxy-agent": "^5.0.0"
   },
-  "bundledDependencies": [],
   "main": "lib/index.js",
   "license": "Apache-2.0",
   "version": "0.0.0",
   "jest": {
     "testMatch": [
-      "**/__tests__/**/*.ts?(x)",
-      "**/?(*.)+(spec|test).ts?(x)"
+      "<rootDir>/src/**/__tests__/**/*.ts?(x)",
+      "<rootDir>/(test|src)/**/?(*.)+(spec|test).ts?(x)"
     ],
     "clearMocks": true,
     "collectCoverage": true,
