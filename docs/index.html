@@ -1,210 +1,71 @@
-<!doctype html>
-<html class="default no-js">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>secretsmanager-versioning</title>
-	<meta name="description" content="Documentation for secretsmanager-versioning">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
-	<script async src="assets/js/search.js" id="search-script"></script>
-</head>
-<body>
-<header>
-	<div class="tsd-page-toolbar">
-		<div class="container">
-			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
-					<div class="field">
-						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
-						<input id="tsd-search-field" type="text" />
-					</div>
-					<ul class="results">
-						<li class="state loading">Preparing search index...</li>
-						<li class="state failure">The search index is not available</li>
-					</ul>
-					<a href="index.html" class="title">secretsmanager-versioning</a>
-				</div>
-				<div class="table-cell" id="tsd-widgets">
-					<div id="tsd-filter">
-						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
-						<div class="tsd-filter-group">
-							<div class="tsd-select" id="tsd-filter-visibility">
-								<span class="tsd-select-label">All</span>
-								<ul class="tsd-select-list">
-									<li data-value="public">Public</li>
-									<li data-value="protected">Public/Protected</li>
-									<li data-value="private" class="selected">All</li>
-								</ul>
-							</div>
-							<input type="checkbox" id="tsd-filter-inherited" checked />
-							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-externals" checked />
-							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-						</div>
-					</div>
-					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="tsd-page-title">
-		<div class="container">
-			<h1>secretsmanager-versioning</h1>
-		</div>
-	</div>
-</header>
-<div class="container container-main">
-	<div class="row">
-		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<a href="#secretsmanger-versioning" id="secretsmanger-versioning" style="color: inherit; text-decoration: none;">
-					<h1>SecretsManger Versioning</h1>
-				</a>
-				<p>A CLI Tool to manage and version <a href="https://aws.amazon.com/de/secrets-manager/">AWS Secrets</a> with <a href="https://github.com/mozilla/sops">SOPS</a></p>
-				<a href="#overview" id="overview" style="color: inherit; text-decoration: none;">
-					<h2>Overview</h2>
-				</a>
-				<p>SecretsManager Version is a CLI Tool for Secrets in combination with SOPS. It helps you keep your secrets safe and versioned inside git projects.
-				The SecretsManager is capable of storing up to 20 tagged secret versions which SecretsManger-Versioning will make use of. The secrets will be versioned by using the MD5 Hash of the encrypted file. With this, every change of the SOPS file will be tagged with a unique key to reference. On top of that, each tag is connected with a Git project and Commit Hash to trace its origin.</p>
-				<a href="#prerequisites" id="prerequisites" style="color: inherit; text-decoration: none;">
-					<h2>Prerequisites</h2>
-				</a>
-				<ul>
-					<li><a href="https://aws.amazon.com/account/">AWS Account</a></li>
-					<li><a href="https://aws.amazon.com/kms/">KMS Key</a></li>
-					<li><a href="https://aws.amazon.com/cli/">AWS CLI (optional)</a></li>
-					<li><a href="https://github.com/mozilla/sops">SOPS</a></li>
-					<li><a href="https://nodejs.org/en/">Node 12 or higher</a></li>
-					<li><a href="https://git-scm.com/">GIT</a></li>
-				</ul>
-				<a href="#secret-management" id="secret-management" style="color: inherit; text-decoration: none;">
-					<h2>Secret Management</h2>
-				</a>
-				<p>Create a new git repository and open a new terminal there:</p>
-				<pre><code class="language-sh"><span style="color: #000000">git init </span><span style="color: #795E26">.</span>
-<span style="color: #000000">git remote add origin git@github.com:username/new_repo</span>
+<!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>secretsmanager-versioning</title><meta name="description" content="Documentation for secretsmanager-versioning"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">secretsmanager-versioning</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1>secretsmanager-versioning </h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<a href="#secretsmanger-versioning" id="secretsmanger-versioning" style="color: inherit; text-decoration: none;">
+  <h1>SecretsManger Versioning</h1>
+</a>
+<p>A CLI Tool to manage and version <a href="https://aws.amazon.com/de/secrets-manager/">AWS Secrets</a> with <a href="https://github.com/mozilla/sops">SOPS</a></p>
+
+<a href="#overview" id="overview" style="color: inherit; text-decoration: none;">
+  <h2>Overview</h2>
+</a>
+<p>SecretsManager Version is a CLI Tool for Secrets in combination with SOPS. It helps you keep your secrets safe and versioned inside git projects.
+The SecretsManager is capable of storing up to 20 tagged secret versions which SecretsManger-Versioning will make use of. The secrets will be versioned by using the MD5 Hash of the encrypted file. With this, every change of the SOPS file will be tagged with a unique key to reference. On top of that, each tag is connected with a Git project and Commit Hash to trace its origin.</p>
+
+<a href="#prerequisites" id="prerequisites" style="color: inherit; text-decoration: none;">
+  <h2>Prerequisites</h2>
+</a>
+<ul>
+<li><a href="https://aws.amazon.com/account/">AWS Account</a></li>
+<li><a href="https://aws.amazon.com/kms/">KMS Key</a></li>
+<li><a href="https://aws.amazon.com/cli/">AWS CLI (optional)</a></li>
+<li><a href="https://github.com/mozilla/sops">SOPS</a></li>
+<li><a href="https://nodejs.org/en/">Node 12 or higher</a></li>
+<li><a href="https://git-scm.com/">GIT</a></li>
+</ul>
+
+<a href="#secret-management" id="secret-management" style="color: inherit; text-decoration: none;">
+  <h2>Secret Management</h2>
+</a>
+<p>Create a new git repository and open a new terminal there:</p>
+<pre><code class="language-sh"><span class="hl-0">git init </span><span class="hl-1">.</span><br/><span class="hl-0">git remote add origin git@github.com:username/new_repo</span>
 </code></pre>
-				<p>Create a new sops file and encrypt it with your kms key:</p>
-				<pre><code class="language-sh"><span style="color: #000000">sops --kms arn:aws:kms:region:account:key/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx sops.json</span>
+<p>Create a new sops file and encrypt it with your kms key:</p>
+<pre><code class="language-sh"><span class="hl-0">sops --kms arn:aws:kms:region:account:key/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx sops.json</span>
 </code></pre>
-				<p>Now run the following to test if the configuration works:</p>
-				<pre><code><span style="color: #001080">npx</span><span style="color: #000000"> </span><span style="color: #001080">secretsmanager</span><span style="color: #000000">-</span><span style="color: #001080">versioning</span><span style="color: #000000"> -</span><span style="color: #001080">f</span><span style="color: #000000"> </span><span style="color: #001080">sops</span><span style="color: #000000">.</span><span style="color: #001080">json</span><span style="color: #000000"> </span><span style="color: #001080">SecretName</span>
+<p>Now run the following to test if the configuration works:</p>
+<pre><code><span class="hl-2">npx</span><span class="hl-0"> </span><span class="hl-2">secretsmanager</span><span class="hl-0">-</span><span class="hl-2">versioning</span><span class="hl-0"> -</span><span class="hl-2">f</span><span class="hl-0"> </span><span class="hl-2">sops</span><span class="hl-0">.</span><span class="hl-2">json</span><span class="hl-0"> </span><span class="hl-2">SecretName</span>
 </code></pre>
-				<p>You should be able to verify that a secret under this name in the currently logged-in account and region was created for you. You can also create a secret yourself and simply reference it. You can verify this by checking the secret in your console or by executing:</p>
-				<pre><code class="language-sh"><span style="color: #000000">aws secretsmanager describe-secret --secret-id SecretName</span>
+<p>You should be able to verify that a secret under this name in the currently logged-in account and region was created for you. You can also create a secret yourself and simply reference it. You can verify this by checking the secret in your console or by executing:</p>
+<pre><code class="language-sh"><span class="hl-0">aws secretsmanager describe-secret --secret-id SecretName</span>
 </code></pre>
-				<p>You should be able to verify that the secret is tagged with a md5 hash and the current version should reference your recent commit.</p>
-				<a href="#cross-account-access" id="cross-account-access" style="color: inherit; text-decoration: none;">
-					<h3>Cross account access</h3>
-				</a>
-				<p>By providing the <code>--role,-r</code> option you can specify that a cross account role should be assumed before any AWS API call.</p>
-				<pre><code><span style="color: #001080">npx</span><span style="color: #000000"> </span><span style="color: #001080">secretsmanager</span><span style="color: #000000">-</span><span style="color: #001080">versioning</span><span style="color: #000000"> -</span><span style="color: #001080">f</span><span style="color: #000000"> </span><span style="color: #001080">sops</span><span style="color: #000000">.</span><span style="color: #001080">json</span><span style="color: #000000"> -</span><span style="color: #001080">r</span><span style="color: #000000"> arn:aws:iam::</span><span style="color: #098658">123456789012</span><span style="color: #000000">:</span><span style="color: #001080">role</span><span style="color: #000000">/</span><span style="color: #001080">MagicRole</span><span style="color: #000000"> </span><span style="color: #001080">SecretName</span>
+<p>You should be able to verify that the secret is tagged with a md5 hash and the current version should reference your recent commit.</p>
+
+<a href="#cross-account-access" id="cross-account-access" style="color: inherit; text-decoration: none;">
+  <h3>Cross account access</h3>
+</a>
+<p>By providing the <code>--role,-r</code> option you can specify that a cross account role should be assumed before any AWS API call.</p>
+<pre><code><span class="hl-2">npx</span><span class="hl-0"> </span><span class="hl-2">secretsmanager</span><span class="hl-0">-</span><span class="hl-2">versioning</span><span class="hl-0"> -</span><span class="hl-2">f</span><span class="hl-0"> </span><span class="hl-2">sops</span><span class="hl-0">.</span><span class="hl-2">json</span><span class="hl-0"> -</span><span class="hl-2">r</span><span class="hl-0"> </span><span class="hl-3">arn</span><span class="hl-0">:</span><span class="hl-3">aws</span><span class="hl-0">:</span><span class="hl-3">iam</span><span class="hl-0">::</span><span class="hl-4">123456789012</span><span class="hl-0">:</span><span class="hl-2">role</span><span class="hl-0">/</span><span class="hl-2">MagicRole</span><span class="hl-0"> </span><span class="hl-2">SecretName</span>
 </code></pre>
-				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
-					<h2>Usage</h2>
-				</a>
-				<p>The secret can be used by referring to with the md5 hash. There are multiple ways to do this. One example is highlighted here.</p>
-				<p>Decrypted Sops File (sops.json)</p>
-				<pre><code class="language-json"><span style="color: #000000">{</span>
-<span style="color: #000000">  </span><span style="color: #0451A5">&quot;example&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;supersecretstring&quot;</span>
-<span style="color: #000000">}</span>
+
+<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+  <h2>Usage</h2>
+</a>
+<p>The secret can be used by referring to with the md5 hash. There are multiple ways to do this. One example is highlighted here.</p>
+<p>Decrypted Sops File (sops.json)</p>
+<pre><code class="language-json"><span class="hl-0">{</span><br/><span class="hl-0">  </span><span class="hl-5">&quot;example&quot;</span><span class="hl-0">: </span><span class="hl-6">&quot;supersecretstring&quot;</span><br/><span class="hl-0">}</span>
 </code></pre>
-				<a href="#cdk" id="cdk" style="color: inherit; text-decoration: none;">
-					<h3>CDK</h3>
-				</a>
-				<p>Add the md5-file dependency to your project and reference your sops file and Secret. After that you should be to reference a jsonField to get reference the secret value:</p>
-				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">sync</span><span style="color: #000000"> </span><span style="color: #AF00DB">as</span><span style="color: #000000"> </span><span style="color: #001080">md5</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;md5-file&quot;</span><span style="color: #000000">;</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">secretPath</span><span style="color: #000000"> = </span><span style="color: #A31515">&quot;SecretName&quot;</span><span style="color: #000000">;</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">versionId</span><span style="color: #000000"> = </span><span style="color: #795E26">md5</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;sops.json&quot;</span><span style="color: #000000">);</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">secret</span><span style="color: #000000"> = </span><span style="color: #001080">cdk</span><span style="color: #000000">.</span><span style="color: #001080">SecretValue</span><span style="color: #000000">.</span><span style="color: #795E26">secretsManager</span><span style="color: #000000">(</span><span style="color: #001080">secretPath</span><span style="color: #000000">, {</span>
-<span style="color: #000000">  </span><span style="color: #001080">jsonField:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;example&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #001080">versionId:</span><span style="color: #000000"> </span><span style="color: #001080">versionId</span><span style="color: #000000">,</span>
-<span style="color: #000000">}).</span><span style="color: #795E26">toString</span><span style="color: #000000">();</span>
-<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">secret</span><span style="color: #000000">); </span><span style="color: #008000">// {{resolve:secretsmanager:SecretName:SecretString:example::md5hashvalue}}</span>
+
+<a href="#cdk" id="cdk" style="color: inherit; text-decoration: none;">
+  <h3>CDK</h3>
+</a>
+<p>Add the md5-file dependency to your project and reference your sops file and Secret. After that you should be to reference a jsonField to get reference the secret value:</p>
+<pre><code class="language-ts"><span class="hl-7">import</span><span class="hl-0"> { </span><span class="hl-2">sync</span><span class="hl-0"> </span><span class="hl-7">as</span><span class="hl-0"> </span><span class="hl-2">md5</span><span class="hl-0"> } </span><span class="hl-7">from</span><span class="hl-0"> </span><span class="hl-6">&quot;md5-file&quot;</span><span class="hl-0">;</span><br/><span class="hl-8">const</span><span class="hl-0"> </span><span class="hl-9">secretPath</span><span class="hl-0"> = </span><span class="hl-6">&quot;SecretName&quot;</span><span class="hl-0">;</span><br/><span class="hl-8">const</span><span class="hl-0"> </span><span class="hl-9">versionId</span><span class="hl-0"> = </span><span class="hl-1">md5</span><span class="hl-0">(</span><span class="hl-6">&quot;sops.json&quot;</span><span class="hl-0">);</span><br/><span class="hl-8">const</span><span class="hl-0"> </span><span class="hl-9">secret</span><span class="hl-0"> = </span><span class="hl-2">cdk</span><span class="hl-0">.</span><span class="hl-2">SecretValue</span><span class="hl-0">.</span><span class="hl-1">secretsManager</span><span class="hl-0">(</span><span class="hl-2">secretPath</span><span class="hl-0">, {</span><br/><span class="hl-0">  </span><span class="hl-2">jsonField:</span><span class="hl-0"> </span><span class="hl-6">&quot;example&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">  </span><span class="hl-2">versionId:</span><span class="hl-0"> </span><span class="hl-2">versionId</span><span class="hl-0">,</span><br/><span class="hl-0">}).</span><span class="hl-1">toString</span><span class="hl-0">();</span><br/><span class="hl-2">console</span><span class="hl-0">.</span><span class="hl-1">log</span><span class="hl-0">(</span><span class="hl-2">secret</span><span class="hl-0">); </span><span class="hl-10">// {{resolve:secretsmanager:SecretName:SecretString:example::md5hashvalue}}</span>
 </code></pre>
-				<a href="#cdk-pipeline---automatic-update-of-secrets" id="cdk-pipeline---automatic-update-of-secrets" style="color: inherit; text-decoration: none;">
-					<h5>CDK Pipeline - Automatic update of Secrets</h5>
-				</a>
-				<p>If you are using the CDK pipelines module, you can use the following CodeBuild-Step to automatically update your secret in the pipeline:</p>
-				<pre><code class="language-typescript">
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">updateSecretEU</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #001080">pipelines</span><span style="color: #000000">.</span><span style="color: #795E26">CodeBuildStep</span><span style="color: #000000">( </span><span style="color: #A31515">&#039;updateSecret&#039;</span><span style="color: #000000">, {</span>
-<span style="color: #000000">  </span><span style="color: #001080">commands:</span><span style="color: #000000">[</span>
-<span style="color: #000000">    </span><span style="color: #A31515">`npx secretsmanager-versioning -f </span><span style="color: #0000FF">${</span><span style="color: #001080">secretFileName</span><span style="color: #0000FF">}</span><span style="color: #A31515"> &#039;</span><span style="color: #0000FF">${</span><span style="color: #001080">secretName</span><span style="color: #0000FF">}</span><span style="color: #A31515">&#039;`</span><span style="color: #000000">,</span>
-<span style="color: #000000">  ],</span>
-<span style="color: #000000">  </span><span style="color: #001080">rolePolicyStatements:</span><span style="color: #000000"> [</span>
-<span style="color: #000000">    </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #001080">iam</span><span style="color: #000000">.</span><span style="color: #795E26">PolicyStatement</span><span style="color: #000000">({</span>
-<span style="color: #000000">      </span><span style="color: #001080">actions:</span><span style="color: #000000"> [</span>
-<span style="color: #000000">        </span><span style="color: #A31515">&quot;secretsmanager:UntagResource&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">        </span><span style="color: #A31515">&quot;secretsmanager:DescribeSecret&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">        </span><span style="color: #A31515">&quot;secretsmanager:PutSecretValue&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">        </span><span style="color: #A31515">&quot;secretsmanager:UpdateSecretVersionStage&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">        </span><span style="color: #A31515">&quot;secretsmanager:TagResource&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">      ],</span>
-<span style="color: #000000">      </span><span style="color: #001080">resources:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;secretArn&#039;</span><span style="color: #000000">],</span>
-<span style="color: #000000">    }),</span>
-<span style="color: #000000">    </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #001080">iam</span><span style="color: #000000">.</span><span style="color: #795E26">PolicyStatement</span><span style="color: #000000">({</span>
-<span style="color: #000000">      </span><span style="color: #001080">actions:</span><span style="color: #000000"> [</span>
-<span style="color: #000000">        </span><span style="color: #A31515">&quot;kms:Decrypt&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">        </span><span style="color: #A31515">&quot;kms:Encrypt&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">        </span><span style="color: #A31515">&quot;kms:GenerateDataKey&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">      ],</span>
-<span style="color: #000000">      </span><span style="color: #001080">resources:</span><span style="color: #000000"> [</span><span style="color: #A31515">&#039;secretKeyArn&#039;</span><span style="color: #000000">],</span>
-<span style="color: #000000">    }),</span>
-<span style="color: #000000">  ],</span>
-<span style="color: #000000">});</span>
+
+<a href="#cdk-pipeline---automatic-update-of-secrets" id="cdk-pipeline---automatic-update-of-secrets" style="color: inherit; text-decoration: none;">
+  <h5>CDK Pipeline - Automatic update of Secrets</h5>
+</a>
+<p>If you are using the CDK pipelines module, you can use the following CodeBuild-Step to automatically update your secret in the pipeline:</p>
+<pre><code class="language-typescript"><br/><span class="hl-8">const</span><span class="hl-0"> </span><span class="hl-9">updateSecretEU</span><span class="hl-0"> = </span><span class="hl-8">new</span><span class="hl-0"> </span><span class="hl-2">pipelines</span><span class="hl-0">.</span><span class="hl-1">CodeBuildStep</span><span class="hl-0">( </span><span class="hl-6">&#39;updateSecret&#39;</span><span class="hl-0">, {</span><br/><span class="hl-0">  </span><span class="hl-2">commands:</span><span class="hl-0">[</span><br/><span class="hl-0">    </span><span class="hl-6">`npx secretsmanager-versioning -f </span><span class="hl-8">${</span><span class="hl-2">secretFileName</span><span class="hl-8">}</span><span class="hl-6"> &#39;</span><span class="hl-8">${</span><span class="hl-2">secretName</span><span class="hl-8">}</span><span class="hl-6">&#39;`</span><span class="hl-0">,</span><br/><span class="hl-0">  ],</span><br/><span class="hl-0">  </span><span class="hl-2">rolePolicyStatements:</span><span class="hl-0"> [</span><br/><span class="hl-0">    </span><span class="hl-8">new</span><span class="hl-0"> </span><span class="hl-2">iam</span><span class="hl-0">.</span><span class="hl-1">PolicyStatement</span><span class="hl-0">({</span><br/><span class="hl-0">      </span><span class="hl-2">actions:</span><span class="hl-0"> [</span><br/><span class="hl-0">        </span><span class="hl-6">&quot;secretsmanager:UntagResource&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">        </span><span class="hl-6">&quot;secretsmanager:DescribeSecret&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">        </span><span class="hl-6">&quot;secretsmanager:PutSecretValue&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">        </span><span class="hl-6">&quot;secretsmanager:UpdateSecretVersionStage&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">        </span><span class="hl-6">&quot;secretsmanager:TagResource&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">      ],</span><br/><span class="hl-0">      </span><span class="hl-2">resources:</span><span class="hl-0"> [</span><span class="hl-6">&#39;secretArn&#39;</span><span class="hl-0">],</span><br/><span class="hl-0">    }),</span><br/><span class="hl-0">    </span><span class="hl-8">new</span><span class="hl-0"> </span><span class="hl-2">iam</span><span class="hl-0">.</span><span class="hl-1">PolicyStatement</span><span class="hl-0">({</span><br/><span class="hl-0">      </span><span class="hl-2">actions:</span><span class="hl-0"> [</span><br/><span class="hl-0">        </span><span class="hl-6">&quot;kms:Decrypt&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">        </span><span class="hl-6">&quot;kms:Encrypt&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">        </span><span class="hl-6">&quot;kms:GenerateDataKey&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">      ],</span><br/><span class="hl-0">      </span><span class="hl-2">resources:</span><span class="hl-0"> [</span><span class="hl-6">&#39;secretKeyArn&#39;</span><span class="hl-0">],</span><br/><span class="hl-0">    }),</span><br/><span class="hl-0">  ],</span><br/><span class="hl-0">});</span>
 </code></pre>
-				<p>Then use this CodeBuildStep as a pre-action in your stage.</p>
-			</div>
-		</div>
-		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
-			<nav class="tsd-navigation primary">
-				<ul>
-					<li class=" ">
-						<a href="modules.html">Modules</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/aws.html">aws</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/git.html">git</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/index.html">index</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/secretsmanager.html">secretsmanager</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/sops.html">sops</a>
-					</li>
-				</ul>
-			</nav>
-			<nav class="tsd-navigation secondary menu-sticky">
-				<ul class="before-current">
-				</ul>
-			</nav>
-		</div>
-	</div>
-</div>
-<footer class="with-border-bottom">
-	<div class="container">
-		<h2>Legend</h2>
-		<div class="tsd-legend-group">
-			<ul class="tsd-legend">
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-			</ul>
-		</div>
-	</div>
-</footer>
-<div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
-</div>
-<div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-</body>
-</html>
+<p>Then use this CodeBuildStep as a pre-action in your stage.</p>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-interface"><a href="interfaces/UpdateSecretOptions.html" class="tsd-kind-icon">Update<wbr/>Secret<wbr/>Options</a></li><li class="tsd-kind-function"><a href="modules.html#updateSecretVersion" class="tsd-kind-icon">update<wbr/>Secret<wbr/>Version</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
